@@ -12,10 +12,10 @@
 #include "exception/InvalidPacketException.h"
 #include "../packets/ConnectAckPacket.h"
 #include "../io/PacketIOManager.h"
-#include "../session/ServerSession.h"
 #include "../packets/factories/ConnectAckPacketFactory.h"
 #include "ConnectPacketHandler.h"
 #include <ServerSessionRepository.h>
+#include <ServerSession.h>
 
 
 
@@ -35,6 +35,7 @@ void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char* c
             std::cout << "creating it" << "\n";
             session = new ServerSession(strdup(clientId));
             _sessionRepository->save(session);
+            _connectionSession->_serverSession = session;
             std::cout << "new session: " << session << "\n";
         } else{
             std::cout << "have found session file for client id" << clientId << ": " << session <<"\n";
@@ -44,7 +45,20 @@ void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char* c
 
 
 void ConnectPacketHandler::handle(RawPacket *rawPacket) {
-    ConnectPacket* packet = static_cast<ConnectPacket*>(rawPacket);
+
+}
+
+ConnectAckPacketFactory *ConnectPacketHandler::getConnectAckPacketFactory() const {
+    return _connectAckPacketFactory;
+}
+
+ConnectPacketHandler::ConnectPacketHandler(ServerConnectionSession *connectionSession, PacketIOManager *packetIo,
+                                           ConnectAckPacketFactory *connectAckPacketFactory,
+                                           ServerSessionRepository *sessionRepository) : PacketHandler(
+        connectionSession, packetIo), _connectAckPacketFactory(connectAckPacketFactory), _sessionRepository(
+        sessionRepository) {}
+
+void ConnectPacketHandler::handle(ConnectPacket *packet) {
     printf("handling connect rawPacket:\n");
     if (_connectionSession->_packets_received->size() != 1){
         throw IllegalSessionStateException("received more than one Connect Packet");
@@ -91,7 +105,7 @@ void ConnectPacketHandler::handle(RawPacket *rawPacket) {
         throw InvalidPacketException("Client id must be alphanumerical");
     }
 
-    
+
     printf("%s\n","valid connect packet received, initializing session");
     unsigned char cleanSession = packet->getCleanSession();
 
@@ -100,16 +114,6 @@ void ConnectPacketHandler::handle(RawPacket *rawPacket) {
     initServerSession(cleanSession, clientId);
     connAck(0x0, cleanSession);
 }
-
-ConnectAckPacketFactory *ConnectPacketHandler::getConnectAckPacketFactory() const {
-    return _connectAckPacketFactory;
-}
-
-ConnectPacketHandler::ConnectPacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo,
-                                           ConnectAckPacketFactory *connectAckPacketFactory,
-                                           ServerSessionRepository *sessionRepository) : PacketHandler(
-        connectionSession, packetIo), _connectAckPacketFactory(connectAckPacketFactory), _sessionRepository(
-        sessionRepository) {}
 
 
 

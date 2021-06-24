@@ -5,13 +5,14 @@
 #ifndef LMQTT__SERVER_CONNECTACKPACKETHANDLER_H
 #define LMQTT__SERVER_CONNECTACKPACKETHANDLER_H
 
+#include <ConnectAckPacket.h>
+#include <ClientConnectionSession.h>
 #include "PacketHandler.h"
 
-class ConnectAckPacketHandler : public PacketHandler{
+class ConnectAckPacketHandler : public PacketHandler<ConnectAckPacket,ClientConnectionSession>{
 public:
-    ConnectAckPacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo);
-
-    virtual void handle(RawPacket *packet);
+    ConnectAckPacketHandler(ClientConnectionSession *connectionSession, PacketIOManager *packetIo);
+    void handle(ConnectAckPacket *packet) override;
 };
 
 

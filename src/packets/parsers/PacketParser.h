@@ -11,14 +11,12 @@
 #include <string.h>
 
 //todo add template
-//template <class P>
+template<class P>
 class PacketParser {
 public:
-    virtual RawPacket* parse(RawPacket* raw_packet) = 0;
-
+    virtual P *parse(RawPacket *raw_packet) = 0;
 
     unsigned short getUf8PayloadLen(unsigned char *pData);
-
 
     /*
      * give me pointer into RawPacket.data buf from where i should start reading
@@ -29,6 +27,24 @@ public:
 
 };
 
+
+// todo create default version for template class
+// todo return RawPacket if PacketParser<> is used
+template<>
+class PacketParser<RawPacket> {
+public:
+    virtual RawPacket *parse(RawPacket *raw_packet) = 0;
+
+    unsigned short getUf8PayloadLen(unsigned char *pData);
+
+    /*
+     * give me pointer into RawPacket.data buf from where i should start reading
+     * I'll increment your pointer until its behind utf8 payload and return
+     * utf-8 payload as null terminated copied string
+     */
+    char *extractUtf8Payload(unsigned char **ppData, bool incrementPointer = true);
+
+};
 
 
 #endif //LMQTT__SERVER_PACKETPARSER_H

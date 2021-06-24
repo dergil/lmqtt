@@ -10,17 +10,20 @@
 #include "../io/PacketIOManager.h"
 
 
-//todo add template
-//template <class P>
-class PacketHandler{
+// S = type of session, P = type of Packet
+template<class P, class S>
+class PacketHandler {
 public:
-    PacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo);
+    PacketHandler(S *connectionSession, PacketIOManager *packetIo);
+    virtual void handle(P *packet) = 0;
 
-//    virtual void handle(P* packet) = 0;
-    virtual void handle(RawPacket* packet) = 0;
 protected:
-    ConnectionSession* _connectionSession;
-    PacketIOManager* _packetIo;
+    S *_connectionSession;
+    PacketIOManager *_packetIo;
 };
+
+template<class P, class S>
+PacketHandler<P, S>::PacketHandler(S *connectionSession, PacketIOManager *packetIo):_connectionSession(
+        connectionSession), _packetIo(packetIo) {}
 
 #endif //LMQTT__SERVER_PACKETHANDLER_H

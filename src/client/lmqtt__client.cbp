@@ -201,10 +201,10 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/exception/PacketCreationException.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/ConnAckPacketParser.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/ConnectAckPacketParser.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/ConnAckPacketParser.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/ConnectAckPacketParser.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/ConnectPacketParser.cpp">
@@ -223,6 +223,9 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/exception/PacketParsingException.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/SessionRepository.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/util/Utils.cpp">

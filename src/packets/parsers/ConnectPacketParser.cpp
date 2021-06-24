@@ -11,7 +11,7 @@
 #include <string.h>
 
 
-RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
+ConnectPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     if (pRawPacket->getSpecificFlags() != 0) {
         // all specific flags must be 0
         throw PacketParsingException("invalid specific flags");

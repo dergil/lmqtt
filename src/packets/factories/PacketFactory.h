@@ -14,10 +14,7 @@
 #include "exception/PacketCreationException.h"
 #include "../Payload.h"
 
-//todo add template
-//template <class P>
 class PacketFactory {
-//    virtual RawPacket *create(RawPacket *raw_packet) = 0;
 public:
 
     // merges payloads into buf on heap and returns it

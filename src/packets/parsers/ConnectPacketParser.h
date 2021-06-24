@@ -10,10 +10,9 @@
 #include "PacketParser.h"
 #include "../RawPacket.h"
 
-class ConnectPacketParser : public PacketParser/*<ConnectPacket>*/{
+class ConnectPacketParser : public PacketParser<ConnectPacket>{
 public:
-//    ConnectPacket* parse(RawPacket* pRawPacket);
-    RawPacket* parse(RawPacket* pRawPacket);
+    ConnectPacket* parse(RawPacket* pRawPacket) override;
 };
 
 

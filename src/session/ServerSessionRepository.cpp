@@ -34,6 +34,5 @@ ServerSession* ServerSessionRepository::load(char* clientId)
     return nullptr;
 }
 
-ServerSessionRepository::ServerSessionRepository(FileDataManager *fileDataManager) : _fileDataManager(
-        fileDataManager) {}
+ServerSessionRepository::ServerSessionRepository(FileDataManager *fileDataManager) : SessionRepository<ServerSession>(_fileDataManager)({}
 

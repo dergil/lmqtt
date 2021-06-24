@@ -3,16 +3,15 @@
 
 #include <FileDataManager.h>
 #include "ServerSession.h"
+#include "SessionRepository.h"
 
 
-class ServerSessionRepository{
-private:
-FileDataManager* _fileDataManager;
+class ServerSessionRepository : SessionRepository<ServerSession>{
 public:
-    void save(ServerSession* session);
-    ServerSession* load(char* clientId);
+    void save(ServerSession* session) override;
+    ServerSession* load(char* clientId) override;
 
-    ServerSessionRepository(FileDataManager *fileDataManager);
+    explicit ServerSessionRepository(FileDataManager *fileDataManager);
 };
 
 #endif // __SESSIONREPOSITORY_H__

@@ -98,7 +98,7 @@ void PacketIOManager::sendPacket(RawPacket *packet) {
     }
     // sendPacket length
     unsigned int len = packet->getLength();
-    unsigned char length_fixed_header [] = { len };
+    unsigned char length_fixed_header [] = { static_cast<unsigned char>(len) };
     if (write(_conn_fd,&length_fixed_header,1) != 1){
         err("cant sendPacket length_fixed_header");
     }
@@ -147,7 +147,7 @@ RawPacket* PacketIOManager::readPacket() {
 
     RawPacket* rawPacket = new RawPacket(specific_flags, packetData, packetLen, packet_type);
     PacketParser *parser  = _packet_parsers->at(packet_type);
-    RawPacket* parsedPacket = parser->parse(rawPacket);
+    RawPacket* parsedPacket = reinterpret_cast<RawPacket *>(parser->parse(rawPacket));
     _connectionSession->_packets_received->push_back(parsedPacket);
     // Utils::printChars(parsedPacket->getData(), parsedPacket->getLength());
     return parsedPacket;
